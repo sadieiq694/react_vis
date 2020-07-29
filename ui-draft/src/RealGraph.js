@@ -1,6 +1,5 @@
 import React from 'react';
 import * as d3 from 'd3'
-import axios from 'axios'
 
 class AppPassedData extends React.Component {
     constructor(props) {

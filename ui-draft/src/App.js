@@ -1,6 +1,6 @@
 import React from 'react';
 import * as d3 from 'd3'
-import axios from 'axios'
+
 
 class AppPassedData extends React.Component {
     constructor(props) {
@@ -9,7 +9,7 @@ class AppPassedData extends React.Component {
     }
 
     componentDidMount() {
-        
+
         const data = this.props.data
         console.log("data", data)
         console.log("edges", this.edges)
@@ -53,7 +53,12 @@ class AppPassedData extends React.Component {
             .data(data.nodes).enter()
             .append('circle')
                 .attr("r", 12)
-                .attr("fill", d => colorScale(d.level));
+                .attr("fill", d => colorScale(d.level))
+                .call(d3.drag()  //sets the event listener for the specified typenames and returns the drag behavior.
+                .on("start", dragstarted) //start - after a new pointer becomes active (on mousedown or touchstart).
+                .on("drag", dragged)      //drag - after an active pointer moves (on mousemove or touchmove).
+                .on("end", dragended)     //end - after an active pointer becomes inactive (on mouseup, touchend or touchcancel).
+                );
 
         const text = chart1.append("g")
                 .attr("class", "texts")
@@ -79,6 +84,25 @@ class AppPassedData extends React.Component {
               .attr('x2', function (link) { return link.target.x })
               .attr('y2', function (link) { return link.target.y })
           });
+
+          function dragstarted(d) {
+            if (!d3.event.active) simulation.alphaTarget(0.3).restart();//sets the current target alpha to the specified number in the range [0,1].
+            d.fy = d.y; //fx - the node’s fixed x-position. Original is null.
+            d.fx = d.x; //fy - the node’s fixed y-position. Original is null.
+          }
+        
+          //When the drag gesture starts, the targeted node is fixed to the pointer
+          function dragged(d) {
+            d.fx = d3.event.x;
+            d.fy = d3.event.y;
+          }
+        
+          //the targeted node is released when the gesture ends
+          function dragended(d) {
+            if (!d3.event.active) simulation.alphaTarget(0);
+            d.fx = null;
+            d.fy = null;
+          }
           
           simulation.force('link')
             .links(data.links)
