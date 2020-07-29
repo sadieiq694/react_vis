@@ -2,28 +2,27 @@ import React from 'react';
 import * as d3 from 'd3'
 import axios from 'axios'
 
-class App extends React.Component {
+class AppPassedData extends React.Component {
     constructor(props) {
         super(props);
+        console.log(props)
     }
 
     componentDidMount() {
-        const url = 'https://raw.githubusercontent.com/mtoslalibu/tritium/master/reactjs/data/dummy_data/dummy_graph_data.json';
         
-        axios.get(url).then(res => {
-          const data = res.data;
+        const data = this.props.data
+        console.log("data", data)
+        console.log("edges", this.edges)
 
-        console.log(data)
-        
         const width = 640,
             height = 480;
 
         var colorScale = d3.scaleOrdinal() //=d3.scaleOrdinal(d3.schemeSet2)
             .domain([1, 2, 3])
-            .range(['red', 'pink', 'blue'])      
+            .range(['red', 'yellow', 'blue'])      
           
           //Initializing chart
-          const chart1 = d3.select('.chart1')
+          const chart2 = d3.select('.chart2')
             .attr('width', width)
             .attr('height', height);
           
@@ -40,7 +39,7 @@ class App extends React.Component {
           
           
           //Creating links
-          const link = chart1.append('g')
+          const link = chart2.append('g')
             .attr('class', 'links')
             .selectAll('line')
             .data(data.links).enter()
@@ -49,14 +48,14 @@ class App extends React.Component {
                 .attr("stroke", "black");
           
           //Creating nodes
-          const node = chart1.append("g")
+          const node = chart2.append('g')
             .selectAll('circle')
             .data(data.nodes).enter()
             .append('circle')
                 .attr("r", 12)
                 .attr("fill", d => colorScale(d.level));
 
-        const text = chart1.append("g")
+        const text = chart2.append("g")
                 .attr("class", "texts")
                 .selectAll("text")
                 .data(data.nodes)
@@ -83,16 +82,14 @@ class App extends React.Component {
           
           simulation.force('link')
             .links(data.links)
-        
-        });
       }
 
         render() {
             return (
-                <div className='container1'>
-                    <h1>Graph Practice 1</h1>
+                <div className='container2'>
+                    <h1>Graph Practice 2</h1>
                     <div className='chartContainer'>
-                    <svg className='chart1'>
+                    <svg className='chart2'>
                     </svg>
                     </div>
                 </div>
@@ -100,4 +97,4 @@ class App extends React.Component {
         }
     }
 
-export default App
+export default AppPassedData
