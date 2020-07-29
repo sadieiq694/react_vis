@@ -87,7 +87,7 @@ class AppPassedData extends React.Component {
         render() {
             return (
                 <div className='container2'>
-                    <h1>Graph Practice 2</h1>
+                    <h1>Graph Practice 3</h1>
                     <div className='chartContainer'>
                     <svg className='chart3'>
                     </svg>

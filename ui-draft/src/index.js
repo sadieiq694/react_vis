@@ -11,7 +11,7 @@ const graphData = require('./data/dummy_data.json');
 
 ReactDOM.render(
   <div>
-    <App/>
+    <App data={graphData}/>
     <AppPassedData data={graphData}/>
     <RealGraph data={graphData}/>
   </div>,

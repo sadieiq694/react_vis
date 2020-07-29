@@ -19,7 +19,7 @@ class AppPassedData extends React.Component {
 
         var colorScale = d3.scaleOrdinal() //=d3.scaleOrdinal(d3.schemeSet2)
             .domain([1, 2, 3])
-            .range(['red', 'yellow', 'blue'])      
+            .range(['red', 'green', 'blue'])      
           
           //Initializing chart
           const chart2 = d3.select('.chart2')

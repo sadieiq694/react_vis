@@ -2,19 +2,18 @@ import React from 'react';
 import * as d3 from 'd3'
 import axios from 'axios'
 
-class App extends React.Component {
+class AppPassedData extends React.Component {
     constructor(props) {
         super(props);
+        console.log(props)
     }
 
     componentDidMount() {
-        const url = 'https://raw.githubusercontent.com/mtoslalibu/tritium/master/reactjs/data/dummy_data/dummy_graph_data.json';
         
-        axios.get(url).then(res => {
-          const data = res.data;
+        const data = this.props.data
+        console.log("data", data)
+        console.log("edges", this.edges)
 
-        console.log(data)
-        
         const width = 640,
             height = 480;
 
@@ -49,7 +48,7 @@ class App extends React.Component {
                 .attr("stroke", "black");
           
           //Creating nodes
-          const node = chart1.append("g")
+          const node = chart1.append('g')
             .selectAll('circle')
             .data(data.nodes).enter()
             .append('circle')
@@ -83,13 +82,11 @@ class App extends React.Component {
           
           simulation.force('link')
             .links(data.links)
-        
-        });
       }
 
         render() {
             return (
-                <div className='container1'>
+                <div className='container2'>
                     <h1>Graph Practice 1</h1>
                     <div className='chartContainer'>
                     <svg className='chart1'>
@@ -100,4 +97,4 @@ class App extends React.Component {
         }
     }
 
-export default App
+export default AppPassedData
